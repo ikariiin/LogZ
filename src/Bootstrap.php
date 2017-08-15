@@ -2,7 +2,7 @@
 
 $router = \Aerys\router()
 ->route('GET', '/logs.json', function(\Aerys\Request $request, \Aerys\Response $response) {
-    $logFile = new \LogParser\ErrorLogFile("/home/saitama/php_error.log");
+    $logFile = new \LogParser\ErrorLogFile(\LogParser\getLogPath());
 
     $parser = new \LogParser\Parser($logFile);
     $parser->start();

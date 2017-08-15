@@ -3,7 +3,10 @@
   "autoload": {
     "psr-4": {
       "LogParser\\": "lib"
-    }
+    },
+    "files": [
+      "src/functions.php"
+    ]
   },
   "require": {
     "amphp/aerys": "^0.5.0"
