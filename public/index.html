@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html class="mdc-typography mdc-theme--dark">
+<head>
+    <title>LogZ</title>
+    <link href="Styles/Style.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="node_modules/material-components-web/dist/material-components-web.css">
+</head>
+<body>
+<aside id="error-dialog"
+       class="mdc-dialog"
+       role="alertdialog"
+       aria-labelledby="my-mdc-dialog-label"
+       aria-describedby="my-mdc-dialog-description">
+    <div class="mdc-dialog__surface">
+        <header class="mdc-dialog__header">
+            <h2 id="my-mdc-dialog-label" class="mdc-dialog__header__title">
+                Error Name
+            </h2>
+        </header>
+        <section id="my-mdc-dialog-description" class="mdc-dialog__body">
+            File and Error Info
+        </section>
+        <footer class="mdc-dialog__footer">
+            <button type="button" class="mdc-button mdc-button--accent mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Close</button>
+            <button type="button" class="mdc-button mdc-button--accent mdc-dialog__footer__button mdc-dialog__footer__button--accept">Open in new page</button>
+        </footer>
+    </div>
+    <div class="mdc-dialog__backdrop"></div>
+</aside>
+<header>
+    <h1 class="mdc-typography--display2 mdc-theme--text-primary-on-dark">LogZ</h1>
+</header>
+<main>
+    <div class="card-container">
+        <div class="mdc-card log-directory">
+            <section class="mdc-card__primary">
+                <h1 class="mdc-card__title mdc-card__title--large bold">Log Directory</h1>
+            </section>
+            <section class="mdc-card__supporting-text">
+                <div class="mdc-textfield" style="width: 100%">
+                    <input
+                            type="text"
+                            id="my-textfield"
+                            class="mdc-textfield__input"
+                            value="/home/saitama/php_error.log"
+                            spellcheck="false">
+                </div>
+            </section>
+            <section class="mdc-card__actions" style="flex-direction: row-reverse">
+                <button class="mdc-button mdc-button--compact mdc-card__action">Change</button>
+            </section>
+        </div>
+        <div class="mdc-card last-log">
+            <section class="mdc-card__primary">
+                <h1 class="mdc-card__title mdc-card__title--large">Uncaught Error: Unsupported operand types</h1>
+                <h2 class="mdc-card__subtitle">Last Logged Error</h2>
+            </section>
+            <section class="mdc-card__supporting-text">
+                <section class="error-details">
+                    <section class="mdc-elevation--z7">
+                        <section class="file-name">/home/saitama/PhpstormProjects/LogParser/lib/LogMessage.php</section>
+                        <section class="code">
+                            <code class="line">
+                                <span class="line-number">91</span>
+                                <span class="line-code">$errorLog = trim(str_replace($matches[0], '', $errorLog));</span>
+                            </code>
+                            <code class="line err-line">
+                                <span class="line-number">92</span>
+                                <span class="line-code">$dateStrTZExp = explode(' ', $dateStr);</span>
+                            </code>
+                            <code class="line">
+                                <span class="line-number">93</span>
+                                <span class="line-code">$dateTime = \DateTimeImmutable::createFromFormat(</span>
+                            </code>
+                        </section>
+                    </section>
+                    <section class="err-info mdc-elevation--z4">
+                        <section class="mdc-typography--title">Full Error:</section>
+                        <code class="err-string">PHP Fatal error:  Uncaught Error: Unsupported operand types in /home/saitama/PhpstormProjects/LogParser/lib/LogMessage.php:41</code>
+                        <section class="dates">
+                            <section class="mdc-typography--subheading1 bold-thick">Date and Time:</section>
+                            2017-08-12 12:21:18
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="mdc-card__actions" style="flex-direction: row-reverse">
+                <button class="mdc-button mdc-button--compact mdc-card__action">Open in new Page</button>
+            </section>
+        </div>
+    </div>
+    <section class="mdc-card">
+        <section class="mdc-card__primary">
+            <h1 class="mdc-card__title mdc-card__title--large">Logs</h1>
+            <h2 class="mdc-card__subtitle">New firsts</h2>
+        </section>
+        <section class="mdc-card__supporting-text">
+            <section id="dynamic-toolbar">
+                <nav id="dynamic-tab-bar" class="mdc-tab-bar mdc-tab-bar--indicator-accent" role="tablist">
+                    <span class="mdc-tab-bar__indicator"></span>
+                </nav>
+            </section>
+            <section>
+                <div class="panels" id="log-panels">
+                    <!-- Would be asynchronously filled -->
+                </div>
+            </section>
+        </section>
+    </section>
+</main>
+<script src="node_modules/material-components-web/dist/material-components-web.js"></script>
+<script>
+    mdc.autoInit()
+</script>
+<script src="Script/Script.js"></script>
+</body>
+</html>
