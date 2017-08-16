@@ -1,4 +1,4 @@
-(() => {
+;(() => {
     "use strict";
 
     const SEVERITY_TYPES = [
@@ -42,6 +42,7 @@
     function handleLogs(logs) {
         logs.reverse();
         logs = simplify(logs);
+        setFirstLog(logs[0]);
         let tabCounter = 0;
         logs.forEach((log, key) => {
             if((key % 30) === 0) {
@@ -92,9 +93,133 @@
         Array.from(document.querySelectorAll('[data-error-id]')).forEach((listItem) => {
             listItem.addEventListener('click', function (evt) {
                 dialog.lastFocusedTarget = evt.target;
-                console.log(this.getAttribute('data-log'));
+                setModalContent(this);
                 dialog.show();
             });
+        });
+    }
+
+    function setNotFoundFile(element, data) {
+        let message = data.message;
+
+        element.innerHTML = `
+            <section class="not-found mdc-elevation--z7">
+                ${message}
+            </section>
+        `;
+    }
+
+    function setFirstLog(log) {
+        document.querySelector('#last-error').innerHTML = log['message']['error'];
+
+        let file = log['message']['fileName'];
+        let lineNumber = log['message']['lineNumber'];
+
+        let lineInitNumber = lineNumber - 2;
+
+        fetch(`/lines/${file.replace(/\//g, '_')}/${lineNumber - 2}:${lineNumber + 2}`)
+            .then(function (data) {
+                return data.json();
+            }).then(function (json) {
+            if(json.code !== 200) {
+                if(json.code === 404) {
+                    setNotFoundFile(document.querySelector('#last-error-info'), json);
+                    return;
+                }
+                return;
+            }
+            let fileLines = `
+                    <section class="mdc-elevation--z7">
+                        <section class="file-name">${file}</section>
+                        <section class="code">
+                `;
+            json['lines'].forEach((line, key) => {
+                let errLine = '';
+                if(lineInitNumber === lineNumber) {
+                    errLine = 'err-line';
+                }
+                fileLines += `
+                        <code class="line ${errLine}">
+                            <span class="line-number">${lineInitNumber}</span>
+                            <span class="line-code">${line}</span>
+                        </code>
+                    `;
+                lineInitNumber++;
+            });
+            fileLines += `
+                        </section>
+                    </section>
+                `;
+
+            let errInfo = `
+                    <section class="err-info mdc-elevation--z7">
+                        <section class="mdc-typography--title mdc-theme--text-primary-on-dark bold-thick">Full Error:</section>
+                        <code class="err-string">${log['originalMessage']}</code>
+                        <section class="dates">
+                            <section class="mdc-typography--subheading1 mdc-theme--text-primary-on-dark bold">Date and Time:</section>
+                            ${log['date']}
+                        </section>
+                    </section>
+                `;
+            document.querySelector('#last-error-info').innerHTML = fileLines + '\n' + errInfo;
+        });
+    }
+
+    function setModalContent(listItem) {
+        let logData = listItem.getAttribute('data-log');
+        logData = eval(`(function () { return ${logData}; })();`);
+        document.querySelector('.mdc-dialog__header__title').innerHTML = logData['message']['error'];
+
+        let file = logData['message']['fileName'];
+        let lineNumber = logData['message']['lineNumber'];
+
+        let lineInitNumber = lineNumber - 2;
+
+        fetch(`/lines/${file.replace(/\//g, '_')}/${lineNumber - 2}:${lineNumber + 2}`)
+            .then(function (data) {
+                return data.json();
+            }).then(function (json) {
+            if(json.code !== 200) {
+                if(json.code === 404) {
+                    setNotFoundFile(document.querySelector('.mdc-dialog__body'), json);
+                    return;
+                }
+                return;
+            }
+            let fileLines = `
+                    <section class="mdc-elevation--z7">
+                        <section class="file-name">${file}</section>
+                        <section class="code">
+                `;
+            json['lines'].forEach((line, key) => {
+                let errLine = '';
+                if(lineInitNumber === lineNumber) {
+                    errLine = 'err-line';
+                }
+                fileLines += `
+                        <code class="line ${errLine}">
+                            <span class="line-number">${lineInitNumber}</span>
+                            <span class="line-code">${line}</span>
+                        </code>
+                    `;
+                lineInitNumber++;
+            });
+            fileLines += `
+                        </section>
+                    </section>
+                `;
+
+            let errInfo = `
+                    <section class="err-info mdc-elevation--z7">
+                        <section class="mdc-typography--title mdc-theme--text-primary-on-dark bold-thick">Full Error:</section>
+                        <code class="err-string">${logData['originalMessage']}</code>
+                        <section class="dates">
+                            <section class="mdc-typography--subheading1 mdc-theme--text-primary-on-dark bold">Date and Time:</section>
+                            ${logData['date']}
+                        </section>
+                    </section>
+                `;
+            document.querySelector('.mdc-dialog__body').innerHTML = fileLines + '\n' + errInfo;
         });
     }
 

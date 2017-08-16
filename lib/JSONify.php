@@ -54,6 +54,6 @@ class JSONify {
      * @return string
      */
     public function getJSON(): string {
-        return json_encode($this->equivLogs, JSON_PRETTY_PRINT);
+        return json_encode($this->equivLogs, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
     }
 }

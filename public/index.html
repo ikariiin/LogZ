@@ -33,62 +33,49 @@
 </header>
 <main>
     <div class="card-container">
-        <div class="mdc-card log-directory">
-            <section class="mdc-card__primary">
-                <h1 class="mdc-card__title mdc-card__title--large bold">Log Directory</h1>
-            </section>
-            <section class="mdc-card__supporting-text">
-                <div class="mdc-textfield" style="width: 100%">
-                    <input
-                            type="text"
-                            id="my-textfield"
-                            class="mdc-textfield__input"
-                            value="/home/saitama/php_error.log"
-                            spellcheck="false">
-                </div>
-            </section>
-            <section class="mdc-card__actions" style="flex-direction: row-reverse">
-                <button class="mdc-button mdc-button--compact mdc-card__action">Change</button>
-            </section>
-        </div>
-        <div class="mdc-card last-log">
-            <section class="mdc-card__primary">
-                <h1 class="mdc-card__title mdc-card__title--large">Uncaught Error: Unsupported operand types</h1>
-                <h2 class="mdc-card__subtitle">Last Logged Error</h2>
-            </section>
-            <section class="mdc-card__supporting-text">
-                <section class="error-details">
-                    <section class="mdc-elevation--z7">
-                        <section class="file-name">/home/saitama/PhpstormProjects/LogParser/lib/LogMessage.php</section>
-                        <section class="code">
-                            <code class="line">
-                                <span class="line-number">91</span>
-                                <span class="line-code">$errorLog = trim(str_replace($matches[0], '', $errorLog));</span>
-                            </code>
-                            <code class="line err-line">
-                                <span class="line-number">92</span>
-                                <span class="line-code">$dateStrTZExp = explode(' ', $dateStr);</span>
-                            </code>
-                            <code class="line">
-                                <span class="line-number">93</span>
-                                <span class="line-code">$dateTime = \DateTimeImmutable::createFromFormat(</span>
-                            </code>
-                        </section>
-                    </section>
-                    <section class="err-info mdc-elevation--z4">
-                        <section class="mdc-typography--title">Full Error:</section>
-                        <code class="err-string">PHP Fatal error:  Uncaught Error: Unsupported operand types in /home/saitama/PhpstormProjects/LogParser/lib/LogMessage.php:41</code>
-                        <section class="dates">
-                            <section class="mdc-typography--subheading1 bold-thick">Date and Time:</section>
-                            2017-08-12 12:21:18
-                        </section>
-                    </section>
+        <section class="log-directory">
+            <div class="mdc-card mdc-theme--text-primary-on-light" style="background: #ffc107;">
+                <section class="mdc-card__primary">
+                    <h1 class="mdc-card__title mdc-card__title--large bold mdc-theme--text-primary-on-light">Important note</h1>
                 </section>
-            </section>
-            <section class="mdc-card__actions" style="flex-direction: row-reverse">
-                <button class="mdc-button mdc-button--compact mdc-card__action">Open in new Page</button>
-            </section>
-        </div>
+                <section class="mdc-card__supporting-text mdc-theme--text-primary-on-light">
+                    The files displayed upon opening the description of an error, might not
+                    contain the version which was producing the error, if the user would've fixed it.
+                    This is because PHP Error Logs do not store the files; which shouldn't be done, anyways.
+                </section>
+            </div>
+            <div class="mdc-card">
+                <section class="mdc-card__primary">
+                    <h1 class="mdc-card__title mdc-card__title--large bold">Log Directory</h1>
+                </section>
+                <section class="mdc-card__supporting-text">
+                    <div class="mdc-textfield" style="width: 100%">
+                        <input
+                                type="text"
+                                id="my-textfield"
+                                class="mdc-textfield__input"
+                                value="/home/saitama/php_error.log"
+                                spellcheck="false">
+                    </div>
+                </section>
+                <section class="mdc-card__actions" style="flex-direction: row-reverse">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Change</button>
+                </section>
+            </div>
+        </section>
+        <section class=" last-log">
+            <div class="mdc-card">
+                <section class="mdc-card__primary">
+                    <h1 class="mdc-card__title mdc-card__title--large" id="last-error">Error</h1>
+                    <h2 class="mdc-card__subtitle">Last Logged Error</h2>
+                </section>
+                <section class="mdc-card__supporting-text" id="last-error-info">
+                </section>
+                <section class="mdc-card__actions" style="flex-direction: row-reverse">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Open in new Page</button>
+                </section>
+            </div>
+        </section>
     </div>
     <section class="mdc-card">
         <section class="mdc-card__primary">

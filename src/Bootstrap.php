@@ -13,6 +13,10 @@ $router = \Aerys\router()
     $response
         ->setHeader("Content-Type", "application/json")
         ->end($jsonify->convert()->getJSON());
+})
+->route('GET', '/lines/{file}/{line_range}', function (\Aerys\Request $request, \Aerys\Response $response, array $args) {
+    $args['file'] = str_replace('_', '/', $args['file']);
+    \LogParser\getLinesOfInterest($request, $response, $args);
 });
 
 (new \Aerys\Host())
