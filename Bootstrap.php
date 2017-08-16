@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__ . "/vendor/autoload.php";
 
-$logFile = new \LogParser\ErrorLogFile("/home/saitama/php_error.log");
+$logFile = new \LogParser\ErrorLogFile(\LogParser\getLogPath());
 
 $parser = new \LogParser\Parser($logFile);
 $parser->start();
