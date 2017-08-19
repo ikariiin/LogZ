@@ -1,8 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700|Material+Icons|Cutive+Mono');
+html.file-page {
+    height: 100%;
+}
 body {
     font-family: "Quicksand", "Roboto Slab", "Roboto Mono", "Roboto Condensed", "Roboto", sans-serif !important;
     background: #212121;
     font-weight: 500;
+    position: relative;
+}
+.file-page body {
+    position: relative;
+    height: 100%;
+    max-height: 97%;
 }
 [class^="mdc-"] {
     font-family: "Quicksand", "Roboto Slab", "Roboto Mono", "Roboto Condensed", "Roboto", sans-serif !important;
@@ -103,6 +112,16 @@ code, pre {
     font-weight: 700;
     font-size: 12px;
     padding: 8px 10px;
+    position: relative;
+}
+.file-visibler {
+    position: absolute;
+    font-size: 10px;
+    top: 9px;
+    right: 10px;
+    color: #2196f3;
+    font-weight: 700;
+    cursor: pointer;
 }
 .code {
     width: 100%;
@@ -111,6 +130,14 @@ code, pre {
     border-bottom-left-radius: 2.5px;
     line-height: 2;
     font-family: 'Cutive Mono', 'Roboto Mono', monospace;
+    overflow: auto;
+    color: #FFFFFF;
+}
+.independent {
+    height: 100%;
+}
+.independent .code {
+    height: calc(100% - 30px);
 }
 .code .line {
     font-family: 'Cutive Mono', 'Roboto Mono', monospace;
@@ -132,8 +159,8 @@ code, pre {
     padding-right: 10px;
     text-align: left;
     display: block;
-    border-right: 1px solid rgba(0, 10, 0, 0.4);
     font-weight: 600;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .code .line .line-code {

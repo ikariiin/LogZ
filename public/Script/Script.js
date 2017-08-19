@@ -130,7 +130,10 @@
             }
             let fileLines = `
                     <section class="mdc-elevation--z7">
-                        <section class="file-name">${file}</section>
+                        <section class="file-name">
+                            ${file}
+                            <a href="javascript:void(0);" class="file-visibler" data-file-name="${file}">Show whole file</a>
+                        </section>
                         <section class="code">
                 `;
             json['lines'].forEach((line, key) => {
@@ -163,6 +166,12 @@
                 `;
             document.querySelector('#last-error-info').innerHTML = fileLines + '\n' + errInfo;
         });
+
+        setTimeout(() => {
+            Array.from(document.querySelectorAll('.file-visibler')).forEach((visibler) => {
+                visibler.addEventListener('click', visibleWholeFile);
+            });
+        }, 500);
     }
 
     function setModalContent(listItem) {
@@ -188,7 +197,10 @@
             }
             let fileLines = `
                     <section class="mdc-elevation--z7">
-                        <section class="file-name">${file}</section>
+                        <section class="file-name">
+                            ${file}
+                            <a href="#" class="file-visibler" data-file-name="${file}">Show whole file</a>
+                        </section>
                         <section class="code">
                 `;
             json['lines'].forEach((line, key) => {
@@ -221,6 +233,12 @@
                 `;
             document.querySelector('.mdc-dialog__body').innerHTML = fileLines + '\n' + errInfo;
         });
+
+        setTimeout(() => {
+            Array.from(document.querySelectorAll('.file-visibler')).forEach((visibler) => {
+                visibler.addEventListener('click', visibleWholeFile);
+            });
+        }, 500);
     }
 
     function updatePanel(index) {
@@ -233,6 +251,12 @@
         if (newActivePanel) {
             newActivePanel.classList.add('active');
         }
+    }
+
+    function visibleWholeFile(ev) {
+        ev.preventDefault();
+        let fileName = ev.target.getAttribute('data-file-name');
+        window.location = '/file#' + encodeURIComponent(fileName.replace(/\//g, '_'));
     }
 
     function convertToListItem(log, key) {
@@ -292,15 +316,63 @@
         }
     }
 
-    let dialog = new mdc.dialog.MDCDialog(document.querySelector('#error-dialog'));
+    let dialog;
 
-    dialog.listen('MDCDialog:accept', function() {
-        console.log('accepted');
-    });
+    if(typeof DECLARE_NON_LOAD === 'undefined' || DECLARE_NON_LOAD === false) {
+        getLogs(handleLogs);
 
-    dialog.listen('MDCDialog:cancel', function() {
-        console.log('canceled');
-    });
+        dialog = new mdc.dialog.MDCDialog(document.querySelector('#error-dialog'));
 
-    getLogs(handleLogs);
+        dialog.listen('MDCDialog:accept', function() {
+            console.log('accepted');
+        });
+
+        dialog.listen('MDCDialog:cancel', function() {
+            console.log('canceled');
+        });
+    }
+
+    class FileViewer {
+        /**
+         * FileViewer Constructor.
+         * @param {String} fileName
+         */
+        constructor(fileName) {
+            this.fileName = fileName;
+        }
+
+        fill() {
+            fetch(`/getFileContents/${this.fileName.replace(/\//g, '_')}`)
+                .then((response) => {return response.text()})
+                .then((data) => {FileViewer._fillFile(this.fileName, data)});
+        }
+
+        static _fillFile(fileName, file) {
+            let fileArr = file.split('\n');
+            let container = document.querySelector('[data-file-container]');
+            container.innerHTML = `
+            <section class="file-name mdc-elevation--z4">
+                ${fileName}
+                <a class="file-visibler" href="/">Go Back</a>
+            </section>
+            `;
+            let toAppend = `
+            <section class="code">
+            `;
+            fileArr.forEach((line, number) => {
+                toAppend += `
+                <code class="line">
+                    <span class="line-number">${number}</span>
+                    <span class="line-code">${line}</span>
+                </code>
+                `;
+            });
+            toAppend += `
+            </section>
+            `;
+            container.innerHTML += toAppend;
+        }
+    }
+
+    window.FileViewer = FileViewer;
 })();

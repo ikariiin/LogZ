@@ -94,3 +94,7 @@ function getLinesOfInterest(Request $request, Response $response, array $args): 
         ]));
     return;
 }
+
+function getFileContent($fileName) {
+    return htmlspecialchars(file_get_contents($fileName));
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" class="file-page">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="Styles/Style.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="node_modules/material-components-web/dist/material-components-web.css">
+</head>
+<body>
+<section data-file-container class="mdc-elevation--z7 independent"></section>
+<script src="node_modules/material-components-web/dist/material-components-web.js"></script>
+<script>
+    mdc.autoInit();
+    const DECLARE_NON_LOAD = true;
+</script>
+<script src="Script/Script.js"></script>
+<script>
+    let fileName = window.location.hash.replace(/_/g, '/').slice(1);
+
+    let fileViewer = new FileViewer(fileName);
+    fileViewer.fill();
+</script>
+</body>
+</html>

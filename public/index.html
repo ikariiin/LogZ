@@ -18,12 +18,12 @@
                 Error Name
             </h2>
         </header>
-        <section id="my-mdc-dialog-description" class="mdc-dialog__body">
+        <section class="mdc-dialog__body">
             File and Error Info
         </section>
         <footer class="mdc-dialog__footer">
             <button type="button" class="mdc-button mdc-button--accent mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Close</button>
-            <button type="button" class="mdc-button mdc-button--accent mdc-dialog__footer__button mdc-dialog__footer__button--accept">Open in new page</button>
+            <button type="button" class="mdc-button mdc-button--accent mdc-dialog__footer__button mdc-dialog__footer__button--accept" disabled>Open in new page</button>
         </footer>
     </div>
     <div class="mdc-dialog__backdrop"></div>
@@ -59,7 +59,7 @@
                     </div>
                 </section>
                 <section class="mdc-card__actions" style="flex-direction: row-reverse">
-                    <button class="mdc-button mdc-button--compact mdc-card__action">Change</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action" disabled>Change</button>
                 </section>
             </div>
         </section>
@@ -72,7 +72,7 @@
                 <section class="mdc-card__supporting-text" id="last-error-info">
                 </section>
                 <section class="mdc-card__actions" style="flex-direction: row-reverse">
-                    <button class="mdc-button mdc-button--compact mdc-card__action">Open in new Page</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action" disabled>Open in new Page</button>
                 </section>
             </div>
         </section>
@@ -98,7 +98,7 @@
 </main>
 <script src="node_modules/material-components-web/dist/material-components-web.js"></script>
 <script>
-    mdc.autoInit()
+    mdc.autoInit();
 </script>
 <script src="Script/Script.js"></script>
 </body>
